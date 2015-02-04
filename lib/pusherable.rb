@@ -74,15 +74,15 @@ module Pusherable
         end
 
         def pusherable_trigger_create
-          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.create", to_json)
+          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.create", Object.const_get(self.class.name+"Serializer").new(self).as_json)
         end
 
         def pusherable_trigger_update
-          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.update", to_json)
+          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.update", Object.const_get(self.class.name+"Serializer").new(self).as_json)
         end
 
         def pusherable_trigger_destroy
-          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.destroy", to_json)
+          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.destroy", Object.const_get(self.class.name+"Serializer").new(self).as_json)
         end
       end
     end
